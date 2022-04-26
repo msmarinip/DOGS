@@ -7,7 +7,7 @@ describe('Dog model', () => {
       console.error('Unable to connect to the database:', err);
     }));
   describe('Validators', () => {
-    beforeEach(() => Dog.sync({ force: true }));
+    beforeEach(() => Dog.sync({ force: false }));
     describe('name', () => {
       it('should throw an error if name is null', (done) => {
         Dog.create({})
@@ -16,6 +16,11 @@ describe('Dog model', () => {
       });
       it('should work when its a valid name', () => {
         Dog.create({ name: 'Pug' });
+      });
+      it('should not work when its a repeted name', (done) => {
+        Dog.create({ name: 'Pug' })
+          .then(() => done(new Error('It requires a unique name')))
+          .catch(() => done());
       });
     });
   });

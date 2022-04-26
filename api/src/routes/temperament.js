@@ -4,37 +4,57 @@ const { Router } = require('express');
 const { Temperament } = require('../db');
 
 const router = Router();
-router.post('/', async(req, res, next) => {
-    // const { temperaments } = req.body;
-    try {
+const { API_URL } = process.env;
 
+//TODO: realizar el post de temperamentos al ingresar al site, dónde conviene? llamarlo desde el front? o desde el back?
+
+router.post('/', async(req, res, next) => {
+
+    try {
         const arrTemperamentosDB = [];
-        const dbTemp = await Temperament.findAll();
+        const dbTemp = await Temperament.findAll({
+            attributes: ['temperament']
+          });
         dbTemp.forEach(element => {
             arrTemperamentosDB.push(element.temperament);
         })
-        //Traigo los temperamentos de la API y los guardo en el array si no existen en la BD
-        
-        const arrNewTemperamentos = [];
-        const response = await axios.get('https://api.thedogapi.com/v1/breeds')
-                                    .then(res => res.data.forEach(dog => {
-                                        if(dog.temperament){
-                                            dog.temperament.split(",").forEach(temperamento => {
-                                                if(!arrTemperamentosDB.includes(temperamento) && !arrNewTemperamentos.includes(temperamento)) {
-                                                    arrNewTemperamentos.push(temperamento);
-                                                }
-                                            });
-                                        }
-                                    }))
-        const newTemperaments = await arrNewTemperamentos.map((temperament) => {
-             return Temperament.findOrCreate({
-                where: {temperament: temperament.trim()},
-                defaults: {temperament: temperament.trim()}
-            })
-        })
+        // const arrNewTemperamentos = [];
+        // await axios.get(API_URL)
+        //     .then(res => res.data.forEach(dog => {
+        //         if(dog.temperament){
+        //             dog.temperament.split(",").forEach(temperamento => {
+        //                 if(!arrTemperamentosDB.includes(temperamento.trim()) && !arrNewTemperamentos.includes(temperamento.trim())) {
+        //                     arrNewTemperamentos.push(temperamento.trim());
+        //                 }
+        //             });
+        //         }
+        //     }))
 
-        await Promise.all(newTemperaments)
-        res.send([...arrTemperamentosDB,...arrNewTemperamentos].sort());
+        // const newTemperaments = await arrNewTemperamentos.map((temperament) => {
+            //      return Temperament.findOrCreate({
+                //         where: {temperament: temperament.trim()},
+                //         defaults: {temperament: temperament.trim()}
+                //     })
+                // })
+                
+                // await Promise.all(newTemperaments)
+        //TODO: BULKCREATE
+        const arrTemps = [];
+        const arrNewTemperamentos = [];
+        await axios.get(API_URL)
+            .then(res => res.data.forEach(dog => {
+                if(dog.temperament){
+                    dog.temperament.split(", ").forEach(temperamento => {
+                        if(!arrTemperamentosDB.includes(temperamento.trim()) && !arrTemps.includes(temperamento.trim())) {
+                            arrNewTemperamentos.push({temperament:temperamento.trim()});
+                            arrTemps.push(temperamento.trim());
+                        }
+                    });
+                }
+            }))
+        if(arrNewTemperamentos.length >0) await Temperament.bulkCreate(arrNewTemperamentos);
+
+        res.send([...arrTemperamentosDB,...arrTemps].sort());
     } catch (error) {
         next(error);
     }   

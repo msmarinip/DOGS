@@ -18,15 +18,17 @@ router.get('/', async (req, res, next) => {
         if(!name){
             const apiDogs = await getAPIDogs();
             const dbDogs = await getDBDogs();
-            res.json([...dbDogs, ...apiDogs])
+            res.json([...dbDogs, ...apiDogs].sort((a,b) => (a.name >= b.name) ? 1 : -1))
+            
         } else {
             const dbDog = await getDBDogByName(name);
             // dbDog ? res.json(dbDog) : res.status(404).send('Not found');
-            if(dbDog) return res.json(dbDog);
-            else {
-                const apiDog = await getAPIDogByName(name);
-                apiDog ? res.json(apiDog) : res.status(404).send('Not found.')
-            }
+            // console.log(dbDog)
+        
+            const apiDog = await getAPIDogByName(name);
+            // console.log(apiDog)
+            (apiDog || dbDog) ? res.json([...dbDog, ...apiDog].sort((a,b) => (a.name >= b.name) ? 1 : -1)) : res.status(404).send('Not found.')
+        
         }
     } 
     catch (error) {
@@ -44,13 +46,13 @@ router.get('/:idRaza', async (req, res, next) => {
                 dog ? res.json(dog) : res.status(404).send('Not found.') 
             } else {
                 const dog = await getApiDogById(idRaza);
-                dog ? res.json(dog) : res.status(404).send('Not found.')
+                dog ? res.status(200).json(dog) : res.status(404).send('Not found.')
             }
         } 
         catch (error) {
             next(error);
         }
-    
+
 })
 
 //Get Only DataBase OLD
@@ -102,6 +104,11 @@ router.post('/', async (req, res, next) => {
             life_spanMax
         }, { transaction: t });
         console.log('newDOG=',newDog)
+        //TODO: !!!! CHEQUEAR QUE EL TEMPERAMENTO ESTÉ EN LA TABLA, SINO CREARLO!!!
+        //debería tener una fcion que reciba los temp y por cada uno findOrCreate
+        //=> tengo que recbir además del id el nombre del temperamento??
+        //o podría enviar otra variable con los nuevos => agregarlos y sumar sus ids a temp...
+        //pensarlo bien
         await newDog.setTemperaments(temp, { transaction: t })
 
         await t.commit();

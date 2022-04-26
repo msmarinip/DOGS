@@ -7,7 +7,7 @@ const temperamentRouter = require('./temperament.js');
 const router = Router();
 
 // Configurar los routers
-router.use('/dog', dogRouter);
+router.use('/dogs', dogRouter);
 router.use('/temperament', temperamentRouter);
 
 module.exports = router;
