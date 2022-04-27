@@ -1,11 +1,12 @@
 import React from 'react'
+import { DogCreate } from './DogCreate'
 
 export const NavBar = () => {
   
 
   return (
     <div>
-      <span>New dog</span>
+      <DogCreate />
 
     </div>
   )

@@ -7,9 +7,9 @@ export const Dogs = () => {
 
   const dispatch = useDispatch();
 
-  const isLoadingState = useSelector(state => state.isLoading)
-  const dogs = useSelector(state => state.dogs);
-  const { page } = useSelector(state => state)
+  // const isLoadingState = useSelector(state => state.isLoading)
+  // const dogs = useSelector(state => state.dogs);
+  const { page, isLoadingState, dogs } = useSelector(state => state)
 
   
   const [cantPages, setCantPages] = useState(1)
@@ -17,12 +17,12 @@ export const Dogs = () => {
   
   useEffect(() => {
     dispatch(isLoading())
-  
+    
   }, [dispatch])
 
   useEffect(() => {
     dispatch(getDogs())
-  
+    
   }, [dispatch])
   
 useEffect(() => {
@@ -32,16 +32,17 @@ useEffect(() => {
 const handleNext = () => {
   
   page<cantPages && dispatch(changePage(page+1))
-  //TODO: Deshabilitar NEXT cuando se llegó a la pag final
+  //TODO: Deshabilitar con CSS NEXT cuando se llegó a la pag final
   
 }
 const handlePrevious = () => {
   page>1 &&  dispatch(changePage(page-1))
-  //TODO: Deshabilitar NEXT cuando se llegó a la pag final
+  //TODO: Deshabilitar con CSS PREVIOUS cuando se llegó a la pag final
   
 }
 
 const handleOrder = (by, direction) => {
+
   dispatch(changeOrder(by, direction))
 }
   return (

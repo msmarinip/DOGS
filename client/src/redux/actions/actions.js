@@ -4,7 +4,8 @@ import { GET_DOG__BYID,
         IS_LOADING,
         CHANGE_PAGE,
         REMOVE_SELECTED_DOG,
-        CHANGE_ORDER
+        CHANGE_ORDER,
+        ORDER_CHANGED
 } from "../types/types";
 
 export const isLoading = () => {
@@ -31,6 +32,12 @@ export const changeOrder = (by, direction) => {
     }
 }
 
+export const reOrder = (by, direction) => {
+    
+    return {
+        type: ORDER_CHANGED
+    }
+}
 export const getDogByID =  (id) => {
     
     return async (dispatch) =>{
