@@ -103,7 +103,7 @@ router.post('/', async (req, res, next) => {
             life_spanMin,
             life_spanMax
         }, { transaction: t });
-        console.log('newDOG=',newDog)
+        // console.log('newDOG=',newDog)
         //TODO: !!!! CHEQUEAR QUE EL TEMPERAMENTO ESTÉ EN LA TABLA, SINO CREARLO!!!
         //debería tener una fcion que reciba los temp y por cada uno findOrCreate
         //=> tengo que recbir además del id el nombre del temperamento??

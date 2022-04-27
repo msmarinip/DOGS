@@ -8,7 +8,7 @@ const getMin = (data) => {
     if(arr.length>1){
         value = isNaN(Number(arr[0].trim())) ?  Number(arr[1].trim()) : Number(arr[0].trim())
     } else {
-        value = isNaN(Number(arr[0].trim())) ?  "No information" : Number(arr[0].trim())
+        value = isNaN(Number(arr[0].trim())) ?  0 : Number(arr[0].trim())
     }
     return value;
 }
@@ -54,7 +54,7 @@ const getDBDogs = async () => {
 
     const arrDBDogs = [];
     dogs.forEach(d => {
-        console.log(d)
+        // console.log(d)
         const obj = {
             idName: 'uuid',
             id: d.uuid,
