@@ -1,13 +1,15 @@
 export const GET_DOG__BYID = 'GET_DOG__BYID';
-export const REMOVE_SELECTED_DOG = 'REMOVE_SELECTED_DOG';
+export const GET_DOG__BYNAME = 'GET_DOG__BYNAME';
+export const GET_DOG__BYTEMPERAMENT = 'GET_DOG__BYTEMPERAMENT';
 export const GET_DOGS = 'GET_DOGS';
+export const GET_TEMPERAMENTS = 'GET_TEMPERAMENTS';
+export const REMOVE_SELECTED_DOG = 'REMOVE_SELECTED_DOG';
 export const IS_LOADING = 'IS_LOADING';
 export const CHANGE_PAGE = 'CHANGE_PAGE';
 export const CHANGE_ORDER = 'CHANGE_ORDER';
-export const ORDER_CHANGED = 'ORDER_CHANGED';
+export const ADD_DOG = 'ADD_DOG';
 
 
 
 
 
-// export const GET_DOGS_BY_PAGE = 'GET_DOGS_BY_PAGE';

@@ -1,13 +1,23 @@
-import { CHANGE_ORDER, CHANGE_PAGE, GET_DOGS, GET_DOG__BYID, IS_LOADING, ORDER_CHANGED, REMOVE_SELECTED_DOG } from "../types/types";
+import { 
+    CHANGE_ORDER, 
+    CHANGE_PAGE, 
+    GET_DOGS, 
+    GET_DOG__BYID, 
+    GET_DOG__BYNAME, 
+    GET_DOG__BYTEMPERAMENT, 
+    GET_TEMPERAMENTS, 
+    IS_LOADING, 
+    REMOVE_SELECTED_DOG } from "../types/types";
 
 const initialState = {
     dogs: [],
     selectedDog: {},
-    listTemperaments: [],
+    temperaments: [],
     page: 1,
     orderBy: ['name', 'ASC'],
     isLoading: false,
-    cantPages: 1
+    cantPages: 1,
+    imgPNG: []
 }
 
 export default function reducer(state = initialState, {type, payload}) {
@@ -24,22 +34,13 @@ switch (type) {
         return {
             ...state,
             dogs: (state.orderBy[1] === 'DESC')
-                    ? payload.sort((a,b) => (a[state.orderBy[0]] >= b[state.orderBy[0]]) ? -1 : 1)
-                    : payload.sort((a,b) => (a[state.orderBy[0]] >= b[state.orderBy[0]]) ? 1 : -1)
+                    ? payload.dogs.sort((a,b) => (a[state.orderBy[0]] >= b[state.orderBy[0]]) ? -1 : 1)
+                    : payload.dogs.sort((a,b) => (a[state.orderBy[0]] >= b[state.orderBy[0]]) ? 1 : -1)
                     ,
-            // dogs: (state.orderBy[1] === 'DESC') 
-            // ? payload.sort((a,b) => {
-            //     if(a[state.orderBy[0]] > b[state.orderBy[0]]) return -1;
-            //     else if(a[state.orderBy[0]] < b[state.orderBy[0]]) return  1;
-            //     else return 0;
-            // })
-            // : payload.sort((a,b) => {
-            //     if(a[state.orderBy[0]] > b[state.orderBy[0]]) return 1;
-            //     else if(a[state.orderBy[0]] < b[state.orderBy[0]]) return  -1;
-            //     else return 0;
-            // }),
             cantPages: Math.ceil(payload.length/8),
-            isLoading: false
+            isLoading: false,
+            imgPNG: payload.pngs
+
         }
     case IS_LOADING:
         return {
@@ -62,6 +63,7 @@ switch (type) {
             orderBy: [payload.name, payload.direction],
             dogs: (payload.direction === 'DESC') 
             ? state.dogs.sort((a,b) => {
+                
                 if(a[payload.name] < b[payload.name]) return 1;
                 else if(a[payload.name] > b[payload.name]) return  -1;
                 else return 0;
@@ -70,28 +72,30 @@ switch (type) {
                 if(a[payload.name] > b[payload.name]) return 1;
                 else if(a[payload.name] < b[payload.name]) return  -1;
                 else return 0;
-            })
-  
-        }
-    case ORDER_CHANGED:
-        return {
-            ...state,
-            dogs: (state.orderBy[1] === 'DESC') 
-            ? state.dogs.sort((a,b) => {
-                // if(a[state.orderBy[0]] > b[state.orderBy[0]]) return -1;
-                // else if(a[state.orderBy[0]] < b[state.orderBy[0]]) return  1;
-                // else return 0;
-                return b[state.orderBy[0]] - a[state.orderBy[0]];
-            })
-            : state.dogs.sort((a,b) => {
-                // if(a[state.orderBy[0]] > b[state.orderBy[0]]) return 1;
-                // else if(a[state.orderBy[0]] < b[state.orderBy[0]]) return  -1;
-                // else return 0;
-                return a[state.orderBy[0]] - b[state.orderBy[0]]
             }),
-            
             page:1,
             isLoading: false
+  
+        }
+
+    case GET_DOG__BYNAME:
+        return {
+            ...state,
+            page:1,
+            dogs: payload
+        }
+    case GET_TEMPERAMENTS:
+        return {
+            ...state,
+            temperaments: payload
+
+        }
+    case GET_DOG__BYTEMPERAMENT:
+        return {
+            ...state,
+            dogs: payload,
+            orderBy: initialState.orderBy,
+            page: 1
         }
     default:
         return {...state};

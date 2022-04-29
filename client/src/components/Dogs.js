@@ -45,6 +45,7 @@ const handleOrder = (by, direction) => {
 
   dispatch(changeOrder(by, direction))
 }
+
   return (
     <>
         {(isLoadingState) && 'Loading...'}
@@ -63,7 +64,7 @@ const handleOrder = (by, direction) => {
                           name = { d.name }
                           weight = { d.weight }
                           temperament = { d.temperament }
-                          image = { d.image?.url }
+                          image = { d.image?.url ? d.image?.url : d.image }
                        />
               } else return null
             })
