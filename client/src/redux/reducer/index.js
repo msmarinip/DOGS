@@ -17,7 +17,8 @@ const initialState = {
     orderBy: ['name', 'ASC'],
     isLoading: false,
     cantPages: 1,
-    imgPNG: []
+    imgPNG: [],
+    searchBy:false
 }
 
 export default function reducer(state = initialState, {type, payload}) {
@@ -82,12 +83,14 @@ switch (type) {
         return {
             ...state,
             page:1,
-            dogs: payload
+            dogs: payload,
+            searchBy: true
         }
     case GET_TEMPERAMENTS:
         return {
             ...state,
-            temperaments: payload
+            temperaments: payload,
+            searchBy: true
 
         }
     case GET_DOG__BYTEMPERAMENT:

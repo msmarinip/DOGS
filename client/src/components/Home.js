@@ -1,15 +1,16 @@
-import React from 'react'
-// import { useDispatch } from 'react-redux'
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+
 import { Link } from 'react-router-dom'
 import mainImg from '../assets/Perrito.png'
-// import { getApiTemperaments } from '../redux/actions/actions'
+import {  getTemperaments } from '../redux/actions/actions'
 export const Home = () => {
 
-  // const dispatch = useDispatch()
-  // useEffect(() => {
-  //   dispatch(getApiTemperaments())
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getTemperaments())
   
-  // }, [dispatch])
+  }, [dispatch])
   
 
   return (

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getDogByTemperament, getTemperaments } from '../redux/actions/actions';
+import { getDogByTemperament, getDBTemperaments } from '../redux/actions/actions';
 
 export const DogSearchByTemperament = () => {
     const [errors, setErrors] = useState('')
@@ -11,7 +11,7 @@ export const DogSearchByTemperament = () => {
     const temperaments = useSelector(state => state.temperaments)
     
     useEffect(() => {
-        dispatch(getTemperaments())
+        dispatch(getDBTemperaments())
         
         return () => {
             setAddTemp([])

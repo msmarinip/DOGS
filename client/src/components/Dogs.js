@@ -3,13 +3,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { changeOrder, changePage, getDogs, isLoading } from '../redux/actions/actions';
 import { DogCard } from './DogCard'
 import style from './dogs.module.css'
+import { DogSearchByName } from './DogSearchByName';
+import { DogSearchByTemperament } from './DogSearchByTemperament';
 export const Dogs = () => {
 
   const dispatch = useDispatch();
 
   // const isLoadingState = useSelector(state => state.isLoading)
   // const dogs = useSelector(state => state.dogs);
-  const { page, isLoadingState, dogs } = useSelector(state => state)
+  const { page, isLoadingState, dogs, searchBy } = useSelector(state => state)
 
   
   const [cantPages, setCantPages] = useState(1)
@@ -21,9 +23,10 @@ export const Dogs = () => {
   }, [dispatch])
 
   useEffect(() => {
-    dispatch(getDogs())
-    
-  }, [dispatch])
+    console.log(searchBy)
+   if(!searchBy) {dispatch(getDogs())}
+// console.log(dogs)    
+  }, [dispatch, searchBy])
   
 useEffect(() => {
   setCantPages(Math.ceil(dogs.length/8))
@@ -49,6 +52,8 @@ const handleOrder = (by, direction) => {
   return (
     <>
         {(isLoadingState) && 'Loading...'}
+        <DogSearchByName />
+      <DogSearchByTemperament/>
         <div>Dogs</div>
         <div>Page { page } of { cantPages } <button onClick={ handlePrevious }>◄ &#8592;</button><button onClick={ handleNext }>&#8594; ►</button></div>
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
-import { getTemperaments } from '../redux/actions/actions';
+import { getDBTemperaments } from '../redux/actions/actions';
 import { inputText } from '../helpers/inputText'
 import { validateForm } from '../helpers/validateForm'
 import { selectTemperament } from '../helpers/selectTemperament'; 
@@ -31,12 +31,15 @@ export const DogCreate = () => {
     newTemps: []
 
   })
+  
   const [tempAdded, setTempAdded] = useState({})
   const dispatch = useDispatch();
   const temperaments = useSelector(state => state.temperaments)
     useEffect(() => {
-      dispatch(getTemperaments())
-      
+      dispatch(getDBTemperaments())
+      return () => {
+        
+      }
       
   }, [dispatch])
     const handleAdd = ({target})  => {
@@ -119,9 +122,8 @@ export const DogCreate = () => {
 
   return (
     <div>
-      {(tempAdded?.msg ==='ok')
-        ? <span>The dog has been added, click <NavLink to={`/dogs/detail/${tempAdded.uuid}`}>here</NavLink>  to see it</span>
-        : <span>There was an error. Please try again later.</span>
+      {(tempAdded?.msg ==='ok') && (<span>The dog has been added, click <NavLink to={`/dogs/detail/${tempAdded.uuid}`}>here</NavLink>  to see it</span>)
+       (tempAdded?.msg ==='err') &&  (<span>There was an error. Please try again later.</span>)
       }
       <form onSubmit={ handleSubmit } name='DogCreate'>
         <div>

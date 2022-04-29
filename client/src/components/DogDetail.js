@@ -1,7 +1,7 @@
 
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { NavLink, useParams } from 'react-router-dom'
+import { NavLink, useParams, useHistory } from 'react-router-dom'
 import { getDogByID, removeSelectedDog } from '../redux/actions/actions'
 
 export const DogDetail = () => {
@@ -10,8 +10,8 @@ export const DogDetail = () => {
   const apiURL = process.env.REACT_APP_API_IMG_URL;
   
   const { name, weight, height, life_span, temperament, reference_image_id } = useSelector(state => state.selectedDog)
-    
-
+  let history = useHistory();
+  
 
   useEffect(() => {
     dispatch(getDogByID(id))
@@ -25,6 +25,7 @@ export const DogDetail = () => {
 
   return (
     <div>
+      <button onClick={history.goBack}>Back</button>
       <h1>{name}</h1>
       <span>{weight}</span>
       <span>{height}</span>

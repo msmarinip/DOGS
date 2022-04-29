@@ -93,7 +93,20 @@ export const getDogs = () =>{
         }
     }
 }
-export const getApiTemperaments = () => {}
+export const getDBTemperaments = () => {
+    return async (dispatch) => {
+        try {
+            // console.log(`${process.env.REACT_APP_SERVER_URL}temperament`)
+            const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}temperament/db`);
+            dispatch({
+                type: GET_TEMPERAMENTS,
+                payload: response.data
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
 export const getTemperaments = () => {
     return async (dispatch) => {
         try {
