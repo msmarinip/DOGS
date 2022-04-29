@@ -8,6 +8,7 @@ const {
     getAPIDogByName, 
     getDBDogById, 
     getApiDogById } = require('../controllers/dogs');
+const temperament = require('../models/Temperament');
 const router = Router();
 
 
@@ -90,10 +91,16 @@ router.get('/db', async (req, res, next) => {
 
 
 router.post('/', async (req, res, next) => {
-    const { name,weightMin,weightMax,heightMin,heightMax,life_spanMin,life_spanMax, temp } = req.body;
-    
+    const { name,weightMin,weightMax,heightMin,heightMax,life_spanMin,life_spanMax, temp, newTemps } = req.body;
+
     const t = await conn.transaction();
     try {
+        //Agrego los nuevos temperamentos a la base de datos
+        const objTemp = newTemps.map(t => {
+            return {temperament:t.trim()}
+        })
+        const newTemperaments = await Temperament.bulkCreate(objTemp);
+        //Creo el perro
         const newDog = await Dog.create({
             name,   
             weightMin,
@@ -103,16 +110,16 @@ router.post('/', async (req, res, next) => {
             life_spanMin,
             life_spanMax
         }, { transaction: t });
-        // console.log('newDOG=',newDog)
-        //TODO: !!!! CHEQUEAR QUE EL TEMPERAMENTO ESTÉ EN LA TABLA, SINO CREARLO!!!
-        //debería tener una fcion que reciba los temp y por cada uno findOrCreate
-        //=> tengo que recbir además del id el nombre del temperamento??
-        //o podría enviar otra variable con los nuevos => agregarlos y sumar sus ids a temp...
-        //pensarlo bien
-        await newDog.setTemperaments(temp, { transaction: t })
-
+        //preparo los ids e inserto en Dog_Temperament
+        const newIds = newTemperaments.map(t => t.id)
+        const totTemperaments = [...temp, ...newIds]
+        const dogTemps = await newDog.setTemperaments(totTemperaments, { transaction: t })
+        const returnData = {
+            ...newDog,
+            temperaments: [...dogTemps]
+        }
         await t.commit();
-        res.json(newDog);
+        res.json(returnData);
     } catch (error) {
         await t.rollback();
         next(error);

@@ -1,5 +1,6 @@
 require('dotenv').config();
 const { Sequelize, Op } = require('sequelize');
+
 const fs = require('fs');
 const path = require('path');
 const {
@@ -45,6 +46,8 @@ const { Dog, Temperament } = sequelize.models;
 
 Dog.belongsToMany(Temperament, { through: 'dog_temperaments' });
 Temperament.belongsToMany(Dog, { through: 'dog_temperaments' });
+
+
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

@@ -4,11 +4,11 @@ const { Router } = require('express');
 const { Temperament } = require('../db');
 
 const router = Router();
-const { API_URL } = process.env;
+const { API_URL, API_KEY } = process.env;
 
 //TODO: realizar el post de temperamentos al ingresar al site, dónde conviene? llamarlo desde el front? o desde el back?
 
-router.post('/', async(req, res, next) => {
+router.get('/', async(req, res, next) => {
 
     try {
         const arrTemperamentosDB = [];
@@ -41,7 +41,7 @@ router.post('/', async(req, res, next) => {
         //TODO: BULKCREATE
         const arrTemps = [];
         const arrNewTemperamentos = [];
-        await axios.get(API_URL)
+        await axios.get(`${API_URL}?api_key=${API_KEY}`)
             .then(res => res.data.forEach(dog => {
                 if(dog.temperament){
                     dog.temperament.split(", ").forEach(temperamento => {
@@ -53,15 +53,18 @@ router.post('/', async(req, res, next) => {
                 }
             }))
         if(arrNewTemperamentos.length >0) await Temperament.bulkCreate(arrNewTemperamentos);
-
-        res.send([...arrTemperamentosDB,...arrTemps].sort());
+        const temperaments = await Temperament.findAll({
+            order:[[ 'temperament', 'ASC' ]]
+        });
+        res.json(temperaments); 
+        // res.send([...arrTemperamentosDB,...arrTemps].sort());
     } catch (error) {
         next(error);
     }   
     
 })
 
-router.get('/', async (req, res, next) => {
+router.get('/db', async (req, res, next) => {
     try {
         const temperaments = await Temperament.findAll({
             order:[[ 'temperament', 'ASC' ]]

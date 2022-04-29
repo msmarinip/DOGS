@@ -1,26 +1,20 @@
 const axios = require('axios');
 const {Dog, Temperament, Op } = require('../db');
+const { dogObject, listDogTemperament, getMin } = require('../helpers/helpers');
+const {
+        API_URL_IMG,
+        API_URL,
+        API_URL_BY_NAME,
+        API_KEY
+     } = process.env;
 
-
-const getMin = (data) => {
-    const arr = data.split('-')
-    let value;
-    if(arr.length>1){
-        value = isNaN(Number(arr[0].trim())) ?  Number(arr[1].trim()) : Number(arr[0].trim())
-    } else {
-        value = isNaN(Number(arr[0].trim())) ?  0 : Number(arr[0].trim())
-    }
-    return value;
-}
 
 const getAPIDogs = async () => {
-    //TODO: usar variables de entorno
     
-    const response = await axios.get('https://api.thedogapi.com/v1/breeds')
+    const response = await axios.get(`${API_URL}?api_key=${API_KEY}`)
     const arrAPIDogs = [];
     
     response.data.forEach(d => {
-        // const apiWeight = d.weight.metric.split('-').trim()
         const obj = {
             idName: 'id',
             id: d.id,
@@ -76,25 +70,8 @@ const getDBDogs = async () => {
 
     return arrDBDogs;
 }
-const listDogTemperament = (temps) => {
-    const temperaments =  temps.map(t => {
-        return ' '+ t.temperament
-    })
-    return temperaments.toString().trim();
-}
 
-const dogObject = (objDog,source) => {
-    return {
-        
-        id: (source === 'db') ? objDog.uuid : objDog.id,
-        name: objDog.name,
-        weight: (source === 'db') ? objDog.weight : objDog.weight.metric,
-        height: (source === 'db') ? objDog.height : objDog.height.metric,
-        life_span: objDog.life_span,
-        image: (source === 'db') ? '' : objDog.reference_image_id,
-        temperament: (source === 'db') ? listDogTemperament(objDog.temperaments) : objDog.temperament
-    }
-}
+
 const getDBDogByName = async (name) => {
     const dog = await Dog.findAll({
         where: {name: {[Op.iLike]:`%${name}%`}},
@@ -113,26 +90,13 @@ const getDBDogByName = async (name) => {
 }
 
 const getAPIDogByName = async (name) => {
-    //TODO: usar variables de entorno
     
-    const response = await axios.get(`https://api.thedogapi.com/v1/breeds/search?q=${name}`)
-    // console.log(name, response.data.length, `https://api.thedogapi.com/v1/breeds/search?q=${name}`)
+    const response = await axios.get(`${API_URL_BY_NAME}?api_key=${API_KEY}&q=${name}`)
+    
     arrDogs = [];
     if(response.data.length > 0){
-        response.data.forEach(d => arrDogs.push(dogObject(d,'api')))
-    //     const dog = response.data[0];
-    //     const obj = {
-    //         id: dog.id,
-    //         name: dog.name,
-    //         weight: dog.weight.metric,
-    //         height: dog.height.metric,
-    //         life_span: dog.life_span,
-    //         temperament: dog.temperament,
-    //         image: dog.image
-    //     }
-    //     return obj;
-    // } else {
-    //     return null;
+        response.data.forEach(d => arrDogs.push(dogObject(d,'apiName')))
+    
     }
     return arrDogs;
 }
