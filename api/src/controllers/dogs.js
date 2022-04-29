@@ -91,14 +91,25 @@ const getDBDogByName = async (name) => {
 
 const getAPIDogByName = async (name) => {
     
-    const response = await axios.get(`${API_URL_BY_NAME}?api_key=${API_KEY}&q=${name}`)
-    
+    const response = await axios.get(`${API_URL}?api_key=${API_KEY}`)
+    // const apiData = response.data;
     arrDogs = [];
     if(response.data.length > 0){
-        response.data.forEach(d => arrDogs.push(dogObject(d,'apiName')))
+        // console.log(apiData)
+        const filteredData = response.data.filter(d => d.name.toLowerCase().includes(name.toLowerCase()))
+        // console.log(filteredData)
+        filteredData.forEach(d => arrDogs.push(dogObject(d,'apiName')))
     
     }
     return arrDogs;
+    // const response = await axios.get(`${API_URL_BY_NAME}?api_key=${API_KEY}&q=${name}`)
+    
+    // arrDogs = [];
+    // if(response.data.length > 0){
+    //     response.data.forEach(d => arrDogs.push(dogObject(d,'apiName')))
+    
+    // }
+    // return arrDogs;
 }
 
 const getDBDogById = async (id) => {
