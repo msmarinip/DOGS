@@ -9,7 +9,7 @@ const dogObject = (objDog,source) => {
     return {
         
         id: (source === 'db') ? objDog.uuid : objDog.id,
-        name: objDog.name,
+        name: nameToStandar(objDog.name),
         weight: (source === 'db') ? objDog.weight : objDog.weight.metric,
         height: (source === 'db') ? objDog.height : objDog.height.metric,
         life_span: objDog.life_span,
@@ -40,8 +40,21 @@ const getMin = (data) => {
     return value;
 }
 
+const nameToStandar = (name) => {
+    const words = name.trim().split(' ');
+    const standar = words.map(w =>{
+       return w.split('').map((l,i) => i=== 0 ? l.toUpperCase() : l.toLowerCase()).join('')
+       
+        // console.log(w)
+    } )
+    return standar.join(' ');
+  }
+
+
+
 module.exports = {
     listDogTemperament,
     dogObject,
-    getMin
+    getMin,
+    nameToStandar
 }

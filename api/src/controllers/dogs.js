@@ -1,6 +1,6 @@
 const axios = require('axios');
 const {Dog, Temperament, Op } = require('../db');
-const { dogObject, listDogTemperament, getMin } = require('../helpers/helpers');
+const { dogObject, listDogTemperament, getMin, nameToStandar } = require('../helpers/helpers');
 const {
         API_URL_IMG,
         API_URL,
@@ -52,7 +52,7 @@ const getDBDogs = async () => {
         const obj = {
             idName: 'uuid',
             id: d.uuid,
-            name: d.name,
+            name: nameToStandar(d.name),
             weight: d.weight,
             weightMin: d.weightMin,
             // weightMax: d.weightMax,
@@ -121,7 +121,7 @@ const getDBDogById = async (id) => {
             attributes: ['temperament']
         }]
     });
-    return dog;
+    return dogObject(dog, 'db');
 }
 const getApiDogById = async (id) => {
     // console.log('id=', id)

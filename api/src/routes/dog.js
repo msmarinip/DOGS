@@ -9,25 +9,22 @@ const {
     getDBDogById, 
     getApiDogById } = require('../controllers/dogs');
 const temperament = require('../models/Temperament');
+const { nameToStandar } = require('../helpers/helpers');
 const router = Router();
 
 
 
 router.get('/', async (req, res, next) => {
-    const { name } = req.query;
+    const { name, source } = req.query;
     try {
         if(!name){
-            const apiDogs = await getAPIDogs();
-            const dbDogs = await getDBDogs();
+            const apiDogs =(!source || source==='api') ?  await getAPIDogs() : [];
+            const dbDogs = (!source || source==='db') ? await getDBDogs() : [];
             res.json([...dbDogs, ...apiDogs].sort((a,b) => (a.name >= b.name) ? 1 : -1))
             
         } else {
-            const dbDog = await getDBDogByName(name);
-            // dbDog ? res.json(dbDog) : res.status(404).send('Not found');
-            // console.log(dbDog)
-        
-            const apiDog = await getAPIDogByName(name);
-            // console.log(apiDog)
+            const dbDog = (!source || source==='db') ?  await getDBDogByName(name) :[];
+            const apiDog = (!source || source==='api') ? await getAPIDogByName(name) :[];
             (apiDog || dbDog) ? res.json([...dbDog, ...apiDog].sort((a,b) => (a.name >= b.name) ? 1 : -1)) : res.status(404).send('Not found.')
         
         }
@@ -92,7 +89,8 @@ router.get('/db', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
     const { name,weightMin,weightMax,heightMin,heightMax,life_spanMin,life_spanMax, temp, newTemps } = req.body;
-
+    
+    
     const t = await conn.transaction();
     try {
         //Agrego los nuevos temperamentos a la base de datos
@@ -101,6 +99,7 @@ router.post('/', async (req, res, next) => {
         })
         const newTemperaments = await Temperament.bulkCreate(objTemp);
         //Creo el perro
+        
         const newDog = await Dog.create({
             name,   
             weightMin,
