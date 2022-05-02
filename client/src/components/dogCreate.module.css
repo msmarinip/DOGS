@@ -1,0 +1,56 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2rem;
+    border: 1px solid black;
+}
+
+.containerLeft{
+    width: 30%;
+    
+    margin: 0%;
+    padding: 0.5rem;
+    background-color: rgb(61, 58, 58);
+    color: white;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.temperamentList{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 100%;
+   
+}
+.temperamentItem{
+    width: 20%;
+}
+
+
+.btn{
+    border-radius: 2px;
+    background-color: rgb(61, 58, 58);
+    color: white;
+}
+
+.btnDisabled{
+    border-radius: 2px;
+    background-color: rgb(118, 113, 113);
+    color: white;
+    pointer-events: none;
+}
+
+.inputReq{
+    border: 1px solid red;
+}
+.spanReq{
+    color: red;
+    font-size: small;
+}

@@ -1,0 +1,19 @@
+
+select {
+    margin: 0.5rem;
+    padding: 0.3rem;
+    border-radius: 2px;
+    border: 1px solid green;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    color: black;
+    /* text-shadow: 2px 2px rgb(102, 115, 113); */
+    /* background-color: lightgreen */
+}
+
+span.click {
+    color: red;
+    cursor: pointer;
+    padding-right: 0.5rem;
+    
+}

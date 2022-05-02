@@ -8,6 +8,7 @@ import { GET_DOG__BYID,
         GET_DOG__BYNAME,
         GET_TEMPERAMENTS,
         GET_DOG__BYTEMPERAMENT,
+        CLEAR_FILTERS,
         // ADD_DOG,
         // ORDER_CHANGED
 } from "../types/types";
@@ -17,11 +18,20 @@ export const isLoading = () => {
         type: IS_LOADING
     }
 }
-
+export const clearFilters = () => {
+    return {
+        type: CLEAR_FILTERS
+    }
+}
 export const changePage = (page) => {
     return {
         type: CHANGE_PAGE,
         payload: page
+    }
+}
+export const removeSelectedDog = () => {
+    return {
+        type: REMOVE_SELECTED_DOG
     }
 }
 
@@ -36,12 +46,6 @@ export const changeOrder = (by, direction) => {
     }
 }
 
-// export const reOrder = (by, direction) => {
-    
-//     return {
-//         type: ORDER_CHANGED
-//     }
-// }
 export const getDogByID =  (id) => {
     
     return async (dispatch) =>{
@@ -55,44 +59,43 @@ export const getDogByID =  (id) => {
 }
 
 //REACT_APP_SERVER_URL
-export const getDogByName = (name) => {
+export const getDogByName = (name, source) => {
     return async (dispatch) => {
         try {
-            const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}dogs?name=${name}`)
+            const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}dogs?name=${name}&source=${source}`)
             dispatch({
                 type: GET_DOG__BYNAME,
-                payload: response.data
+                payload: {
+                    dogs: response.data,
+                    searchName: name
+                }
             })
         } catch (error) {
             console.log(error)
         }
     }
 }
-export const removeSelectedDog = () => {
-    return {
-        type: REMOVE_SELECTED_DOG
-    }
-}
 
 
-export const getDogs = () =>{
+export const getDogs = (source) =>{
     return async (dispatch) => {
-
+        console.log('o acá?',source)
         try {
-            const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}dogs/`);
-            const imgPng = [];
-            response.data.forEach(d => {
-                if(d.image?.url?.split('.')[3] !== 'jpg' && Number(d.id)) imgPng.push(d.id)
-            })
+            const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}dogs?source=${source}`);
+            // const imgPng = [];
+            // response.data.forEach(d => {
+            //     if(d.image?.url?.split('.')[3] !== 'jpg' && Number(d.id)) imgPng.push(d.id)
+            // })
             dispatch({ type: GET_DOGS, payload: {
                 dogs:response.data,
-                pngs: imgPng
+                source: source
             } })
         } catch (error) {
             console.log(error)
         }
     }
 }
+
 export const getDBTemperaments = () => {
     return async (dispatch) => {
         try {
@@ -122,11 +125,11 @@ export const getTemperaments = () => {
     }
 }
 
-export const getDogByTemperament = (searchTemperaments) => {
+export const getDogByTemperament = (searchTemperaments, source) => {
     return async (dispatch) => {
 
         try {
-            const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}dogs/`);
+            const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}dogs?source=${source}`);
             const dogs = response.data;
             console.log(searchTemperaments)
             const searchedDogs = [];
@@ -142,7 +145,10 @@ export const getDogByTemperament = (searchTemperaments) => {
             
             dispatch({
                 type: GET_DOG__BYTEMPERAMENT,
-                payload: searchedDogs
+                payload:{
+                    dogs: searchedDogs,
+                    searchValues:searchTemperaments
+                }
             })
         } catch (error) {
             console.log(error)

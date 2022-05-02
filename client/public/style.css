@@ -1,0 +1,22 @@
+button.search {
+    margin: 0.5rem;
+    padding: 0.3rem;
+    border-radius: 2px;
+    border: 1px solid white;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    color: white;
+    /* text-shadow: 2px 2px rgb(102, 115, 113); */
+    background-color: rgb(61, 58, 58);
+}
+
+.item{
+    display: block;
+}
+
+.home {
+    /* background-color: rgb(55, 104, 93); */
+    
+    width: 100vw;
+    height: 100vh;
+}

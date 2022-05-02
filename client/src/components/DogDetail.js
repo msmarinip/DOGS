@@ -1,16 +1,18 @@
 
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { NavLink, useParams, useHistory } from 'react-router-dom'
+import { NavLink, useParams } from 'react-router-dom'
 import { getDogByID, removeSelectedDog } from '../redux/actions/actions'
+import mainImg from '../assets/Perrito.png'
+import style from './dogDetail.module.css'
 
 export const DogDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const apiURL = process.env.REACT_APP_API_IMG_URL;
   
-  const { name, weight, height, life_span, temperament, reference_image_id } = useSelector(state => state.selectedDog)
-  let history = useHistory();
+  
+  const { name, weight, height, life_span, temperament, image } = useSelector(state => state.selectedDog)
+  // let history = useHistory();
   
 
   useEffect(() => {
@@ -21,18 +23,27 @@ export const DogDetail = () => {
       dispatch(removeSelectedDog())
     }
   }, [dispatch, id])
-  
+
 
   return (
-    <div>
-      <button onClick={history.goBack}>Back</button>
-      <h1>{name}</h1>
-      <span>{weight}</span>
-      <span>{height}</span>
-      <span>{life_span}</span>
-      <span>{temperament}</span>
-      <span>{`${apiURL}${reference_image_id}`}</span>
-      <NavLink to='/dogs'>Back</NavLink>
+    <div className={style.container}>
+      <div className={style.containerPoem}>
+      <div className={style.poem}>
+        
+      </div>
+      </div>
+      <div className={style.containerData}>
+      <img src={ image ? image.url : mainImg} alt={ name } className={style.image}/>
+        <h1>{name}</h1>
+        <span className='item'>Wight: { weight } kg</span><br />
+        <span>Height: { height } cm</span><br />
+        <span>Life span: { life_span }</span><br />
+        <span>Temperament: {temperament}</span><br />
+        
+        <NavLink to='/dogs'>Back</NavLink><br />
+      </div>
     </div>
+    
   )
 }
+

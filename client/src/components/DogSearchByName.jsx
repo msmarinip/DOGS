@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getDogByName } from '../redux/actions/actions';
 
 export const DogSearchByName = () => {
     const dispatch = useDispatch();
+    const {searchName, source} = useSelector(state => state)
     const [search, setSearch] = useState('')
     const handleChange = ({ target }) => {
         setSearch(target.value);
@@ -12,14 +13,17 @@ export const DogSearchByName = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         // console.log(search);
-        dispatch(getDogByName(search));
+        dispatch(getDogByName(search, source));
+        setSearch('')
     }
   return (
-    <div>Name: 
+    <div>
         <form onSubmit={ handleSubmit }>
+            <label>By name: </label>
             <input type='text' name='name' value={ search } onChange={ handleChange } />
-            <input type='submit' value='Search' />
+            <button type='submit' className='search' value='Search'>Search</button>
         </form>
+        {searchName}
     </div>
   )
 }

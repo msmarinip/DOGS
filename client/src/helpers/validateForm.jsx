@@ -11,14 +11,14 @@ export const validateForm = (values, errors, input) => {
         if(input.name ===''){
            err.name = `Please, enter the name`;
         } else {
-          if(!/^[a-zA-ZáéíóúüñÑ\s]*$/.test(input.name)){
-               err.name =`The name can only contain letters`;
+          if(!/^[a-zA-Z\s]*$/.test(input.name)){
+               err.name =`The name can only contain letters.`;
           }
         }    
         return err
       case 'addTemp':
-          if(!/^[a-zA-ZáéíóúüñÑ\s]*$/.test(input.addTemp)){
-            err.addTemp =`The temperament can only contain letters`;
+          if(!/^[a-zA-Z\s]*$/.test(input.addTemp)){
+            err.addTemp =`The temperament can only contain letters.`;
         }
         return err
       case 'weightMin':
@@ -30,11 +30,11 @@ export const validateForm = (values, errors, input) => {
         } else {
           
           if(!/^\d+$/.test(input[keyName])){
-              err[keyName] =`Only positive numbers are allow`;
+              err[keyName] =`Only positive numbers are allow.`;
           }
         }
-        if(keyName === 'weightMax' && parseInt(values.weightMin)>= parseInt(input[keyName]) ) err[keyName] =`The maximum value must be greater then the minimum`;
-        if(keyName === 'heightMax' && parseInt(values.heightMin)>= parseInt(input[keyName]) ) err[keyName] =`The maximum value must be greater then the minimum`;
+        if(keyName === 'weightMax' && parseInt(values.weightMin)>= parseInt(input[keyName]) ) err[keyName] =`The maximum value must be greater then the minimum.`;
+        if(keyName === 'heightMax' && parseInt(values.heightMin)>= parseInt(input[keyName]) ) err[keyName] =`The maximum value must be greater then the minimum.`;
         return err;
       case 'life_spanMin':
       case 'life_spanMax':

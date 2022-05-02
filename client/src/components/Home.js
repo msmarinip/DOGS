@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 
 import { Link } from 'react-router-dom'
-import mainImg from '../assets/Perrito.png'
+import mainImg from '../assets/Perros.png'
 import {  getTemperaments } from '../redux/actions/actions'
 export const Home = () => {
 
@@ -16,9 +16,10 @@ export const Home = () => {
   return (
     <>
     
-    <div>
+    <div className='home'>
       <center>
-        <img src={mainImg} alt='Welcome' width={500}/>
+        Welcome to the Dogs breads site
+        <br/><img src={mainImg} alt='Welcome' width={500}/><br/>
         <Link to='/dogs'>
             [ingresar]
         </Link>

@@ -2,5 +2,53 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  /* padding: 1rem; */
+  /* position: sticky;
+  top: 0; */
+  background-color: rgb(55, 104, 93)
+}
+.navMenu {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  
+}
+.navTitle {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: rgb(174, 226, 190);
+  margin-left: 1rem;
+  margin-right: 1rem;
+  width: 22%;
+}
+.unselected {
+  
+  font-size: 1.5rem;
   padding: 0.5rem;
+  margin: 1rem;
+  border-radius: 5px;
+  border: 1px solid white;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.navLink {
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  margin: 1rem;
+  border-radius: 5px;
+  border: 1px solid white;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  text-decoration: none;
+  text-shadow: 2px 2px rgb(39, 46, 45);
+}
+.img{
+  padding-right: 1rem;
 }
