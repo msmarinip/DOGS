@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
-import { getDBTemperaments } from '../redux/actions/actions';
-import { inputText } from '../helpers/inputText'
-import { validateForm } from '../helpers/validateForm'
-import { selectTemperament } from '../helpers/selectTemperament'; 
+import { getDBTemperaments } from '../../redux/actions/actions';
+import { inputText } from '../../helpers/inputText'
+import { validateForm } from '../../helpers/validateForm'
+import { selectTemperament } from '../../helpers/selectTemperament'; 
 import { NavLink } from 'react-router-dom';
 
 import style from './dogCreate.module.css'
@@ -20,7 +20,7 @@ export const DogCreate = () => {
     addTemp:'',
     final: ''
   })
-  const [values, setValues] = useState({
+  const [values, setValues] = React.useState({
     name: '',
     weightMin: '',
     weightMax: '',
@@ -124,11 +124,11 @@ export const DogCreate = () => {
     // console.log(first)
     try {
         const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}dogs`, dogToAdd)
-        console.log(response.data.dataValues)
+        // console.log(response.data.dataValues)
         setTempAdded({msg: 'ok', uuid: response.data.dataValues.uuid})
         // console.log(tempAdded)
     } catch (error) {
-        console.log(error)
+        // console.log(error)
         setTempAdded({msg: 'err'})
     }
 }

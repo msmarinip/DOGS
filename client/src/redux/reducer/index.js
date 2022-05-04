@@ -114,7 +114,8 @@ switch (type) {
             ...state,
             searchBy: false,
             searchTempValues: initialState.searchTempValues,
-            searchName:initialState.searchName
+            searchName:initialState.searchName,
+            page:1
         }
     default:
         return {...state};

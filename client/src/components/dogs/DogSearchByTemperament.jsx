@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getDogByTemperament, getDBTemperaments } from '../redux/actions/actions';
+import { getDogByTemperament, getDBTemperaments } from '../../redux/actions/actions';
 import style from './DogSearchByTemperament.module.css'
 export const DogSearchByTemperament = () => {
     const dispatch = useDispatch();

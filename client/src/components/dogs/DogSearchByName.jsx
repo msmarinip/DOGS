@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { getDogByName } from '../redux/actions/actions';
+import { getDogByName } from '../../redux/actions/actions';
 
 export const DogSearchByName = () => {
     const dispatch = useDispatch();

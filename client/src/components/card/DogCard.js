@@ -2,7 +2,7 @@
 // import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import style from './dogCard.module.css'
-import mainImg from '../assets/Perrito.png'
+import mainImg from '../../assets/Perrito.png'
 // import mainImg from '../assets/dogHome.jpeg'
 
 export const DogCard = ({id, name, weight, temperament, image}) => {

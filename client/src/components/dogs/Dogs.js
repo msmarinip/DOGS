@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { changeOrder, changePage, clearFilters, getDogs, isLoading } from '../redux/actions/actions';
-import { DogCard } from './DogCard'
+import { changeOrder, changePage, clearFilters, getDogs, isLoading } from '../../redux/actions/actions';
+import { DogCard } from '../card/DogCard'
 import style from './dogs.module.css'
 import { DogSearchByName } from './DogSearchByName';
 import { DogSearchByTemperament } from './DogSearchByTemperament';
@@ -15,12 +15,13 @@ export const Dogs = () => {
   const [source, setSource] = useState('')  
   
   useEffect(() => {
-    dispatch(isLoading())
+    if(!searchBy){ dispatch(isLoading())}
     
-  }, [dispatch])
+  }, [dispatch, searchBy])
 
   useEffect(() => {
    if(!searchBy) {dispatch(getDogs(source))}
+   
 
   }, [dispatch, searchBy, source])
   
@@ -59,7 +60,7 @@ const handleSource = ({target}) => {
         <div className={style.containerFilters}>
           <div className={style.filters}>
               <span>Source: 
-                <select name='source1' onChange={handleSource}>
+                <select name='source' onChange={handleSource}>
                   <option value=''>All</option>
                   <option value='db'>User created</option>
                   <option value='api'>Api</option>
@@ -80,7 +81,7 @@ const handleSource = ({target}) => {
           </div>
         </div>
         <div className={ style.container }>
-        {(isLoadingState) && 'Loading...'}
+        {(isLoadingState) && <>Loading...<br/></>}
         {(dogs.length === 0 && !isLoadingState) && 'There are no dogs with the chosen characteristics'}
           {
             dogs?.map((d, i) => {
