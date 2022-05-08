@@ -7,8 +7,10 @@ export const REMOVE_SELECTED_DOG = 'REMOVE_SELECTED_DOG';
 export const IS_LOADING = 'IS_LOADING';
 export const CHANGE_PAGE = 'CHANGE_PAGE';
 export const CHANGE_ORDER = 'CHANGE_ORDER';
-export const ADD_DOG = 'ADD_DOG';
+// export const ADD_DOG = 'ADD_DOG';
 export const CLEAR_FILTERS = 'CLEAR_FILTERS';
+export const CHANGE_SOURCE = 'CHANGE_SOURCE';
+export const ADD_DOG_NAME = 'ADD_DOG_NAME';
 
 
 

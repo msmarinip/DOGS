@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { changeOrder, changePage, clearFilters, getDogs, isLoading } from '../../redux/actions/actions';
+import { orderBy } from '../../helpers/orderBy';
+import { changeOrder, changePage, changeSource, clearFilters, getDogs, isLoading } from '../../redux/actions/actions';
 import { DogCard } from '../card/DogCard'
 import style from './dogs.module.css'
 import { DogSearchByName } from './DogSearchByName';
@@ -8,11 +9,11 @@ import { DogSearchByTemperament } from './DogSearchByTemperament';
 export const Dogs = () => {
 
   const dispatch = useDispatch();
-  const { page, isLoading: isLoadingState, dogs, searchBy } = useSelector(state => state)
+  const { page, isLoading: isLoadingState, dogs, searchBy, source, searchTempValues, searchName } = useSelector(state => state)
 
   
   const [cantPages, setCantPages] = useState(1)
-  const [source, setSource] = useState('')  
+  // const [source, setSource] = useState('')  
   
   useEffect(() => {
     if(!searchBy){ dispatch(isLoading())}
@@ -20,9 +21,7 @@ export const Dogs = () => {
   }, [dispatch, searchBy])
 
   useEffect(() => {
-   if(!searchBy) {dispatch(getDogs(source))}
-   
-
+     if(!searchBy) {dispatch(getDogs(source))}
   }, [dispatch, searchBy, source])
   
 useEffect(() => {
@@ -51,16 +50,23 @@ const handleClear = () => {
 
 const handleSource = ({target}) => {
   // console.log(target.value)
-  setSource(target.value)
-  dispatch(clearFilters())
+  // setSource(target.value)
+  dispatch(changeSource(target.value))
 }
+
+
   return (
     <>
         
         <div className={style.containerFilters}>
           <div className={style.filters}>
               <span>Source: 
-                <select name='source' onChange={handleSource}>
+                <select 
+                  name='source' 
+                  onChange={handleSource}
+                  defaultValue={ source ? source : '' }
+                
+                >
                   <option value=''>All</option>
                   <option value='db'>User created</option>
                   <option value='api'>Api</option>
@@ -72,17 +78,28 @@ const handleSource = ({target}) => {
           </div>
           <div className={style.orders}>
             <div
-              >Order by: <span>Name:</span> <span className={style.arrow} onClick={() => handleOrder('name', 'DESC')}>⇩</span>
-                                            <span className={style.arrow} onClick={() => handleOrder('name', 'ASC')}>⇧</span>
-                         <span>Weight:</span> <span className={style.arrow} onClick={() => handleOrder('weightMin', 'DESC')}>⇩</span>
-                                              <span className={style.arrow} onClick={() => handleOrder('weightMin', 'ASC')}>⇧</span>
+              >Order by: 
+                        {orderBy('Name', 'name', style, handleOrder)}
+                        {orderBy('Weight', 'weightMin', style, handleOrder)}
+                        
             </div>
+            
             <div><span>Page { page } of { cantPages }</span> <br/><span  className={style.arrow} onClick={ handlePrevious } >◁ </span><span  className={style.arrow} onClick={ handleNext }> ▷</span></div>
           </div>
         </div>
-        <div className={ style.container }>
-        {(isLoadingState) && <>Loading...<br/></>}
+        
+        <div className={style.errors}>
+        {(isLoadingState) && <>Loading...<br/><br/></>}
+        
         {(dogs.length === 0 && !isLoadingState) && 'There are no dogs with the chosen characteristics'}
+          {searchBy
+            ? searchName ? <div>Searched by name: {searchName}</div>
+                         : <div>Searched by temperament: {searchTempValues.map(t => ` ${t} -  `)}</div>
+            : null
+            }
+        </div>
+        <div className={ style.container }>
+       
           {
             dogs?.map((d, i) => {
               if (i < page*8 && i>=(page-1)*8) {

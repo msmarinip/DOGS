@@ -7,12 +7,14 @@
     border-radius: 10px;
     /* justify-content: first baseline; */
     /* background-color: rgb(61, 58, 58); */
+    font-family: "Comic Sans MS", cursive, sans-serif;
 }
 
 .image {
     width: auto;
-    height: 10.5vw;
+    height: 8vw;
     border-radius: 10px 10px 10px 10px;
+    box-shadow: 2px 2px 6px 1px grey
 }
 
 .imageContainer{
@@ -21,7 +23,7 @@
     justify-content: space-evenly;
     align-items: center;
     margin-top: 1rem;
- 
+    
 }
 
 .data {

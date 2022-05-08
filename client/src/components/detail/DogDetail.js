@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useParams } from 'react-router-dom'
 import { getDogByID, isLoading, removeSelectedDog } from '../../redux/actions/actions'
-import mainImg from '../../assets/PerritoCh.png'
+import mainImg from '../../assets/Perrito1.png'
 import style from './dogDetail.module.css'
 
 export const DogDetail = () => {

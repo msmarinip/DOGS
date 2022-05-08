@@ -9,6 +9,7 @@ import '@testing-library/jest-dom';
 
 import { DogCreate } from './components/create/DogCreate';
 import * as types from './redux/types/types'
+// import * as actions from './redux/actions/actions'
 
 // configure({ adapter: new Adapter() });
 
@@ -27,12 +28,12 @@ describe('Tests on <DogCreate />', () => {
     newTemps: []
   }
   const mockStore = configureStore([thunk]);
-  const { GET_TEMPERAMENTS } = types;
-
+  // const { GET_TEMPERAMENTS } = types;
+  const temperaments = [{id:5, temperament: 'Active'}, {id:2, temperament: 'Adaptable'}]
 
   describe('Create dog form html tags', () => { 
     let createDog;
-    let store = mockStore(state);
+    let store = mockStore(state, temperaments);
     beforeEach(() => {
       createDog = mount(
           <Provider store={store}>
@@ -48,7 +49,7 @@ describe('Tests on <DogCreate />', () => {
     });
 
     it('Must render a label with text Name"', () => {
-      expect(createDog.find('label').at(0).text()).toEqual('Name');
+      expect(createDog.find('label').at(0).text()).toEqual('Name:  ');
    });
 
     it('Must render an input type text name "name"', () => {
@@ -81,18 +82,18 @@ describe('Tests on <DogCreate />', () => {
       expect(createDog.find('input[type="number"]').length).toBe(6);
     });
     it('Must render all the inicial error spans', () => {
-      expect(createDog.find('span').at(0).text()).toBe('Required');
-      expect(createDog.find('span').at(1).text()).toBe('min: Required ');
-      expect(createDog.find('span').at(2).text()).toBe('max: Required');
-      expect(createDog.find('span').at(3).text()).toBe('min: Required ');
-      expect(createDog.find('span').at(4).text()).toBe('max: Required');
+      expect(createDog.find('span').at(0).text()).toBe('  Required');
+      expect(createDog.find('span').at(1).text()).toBe('  min: Required ');
+      expect(createDog.find('span').at(2).text()).toBe('  max: Required');
+      expect(createDog.find('span').at(3).text()).toBe('  min: Required ');
+      expect(createDog.find('span').at(4).text()).toBe('  max: Required');
       expect(createDog.find('span').at(5).text()).toBe('');
     });
     it('Must render the tags for new temperaments',() => {
       expect(createDog.find('label').at(10).text()).toBe('New temperament: ');
       expect(createDog.find('input[name="addTemp"]').length).toBe(1);
       expect(createDog.find('button[type="button"]').length).toBe(1);
-      expect(createDog.find('button[name="addNewTemperament"]').text()).toBe('add');
+      expect(createDog.find('button[name="addNewTemperament"]').text()).toBe('  add');
     })
 
     it('Must render one checkbox for each database temperament',() => {
@@ -106,7 +107,7 @@ describe('Tests on <DogCreate />', () => {
   });
   describe('Local states management', () => { 
     let useState, useStateSpy, createDog;
-    let store = mockStore(state);
+    let store = mockStore(state, temperaments);
     beforeEach(() => {
       useState = jest.fn();
        useStateSpy = jest.spyOn(React, 'useState');
@@ -279,35 +280,12 @@ describe('Tests on <DogCreate />', () => {
           addTemp: 'Amigable',
           newTemps: []
         });
-        // createDog.find('button[name="addNewTemperament"]').simulate('click');
-        // expect(useState).toHaveBeenCalledWith({
-        //   name: '',
-        //   weightMin: '',
-        //   weightMax: '',
-        //   heightMin:'',
-        //   heightMax:'',
-        //   life_spanMin:'',
-        //   life_spanMax: '',
-        //   temp:[],
-        //   addTemp: '',
-        //   newTemps: ['Amigable']
-        // });
       });
-    });
 
+
+    });
   });
 });
-
-
-
-
-
-
-
-
-
-
-
 
 
 //ESTO ERA LO QUE VENÍA HECHO //por las dudas NO BORRAR

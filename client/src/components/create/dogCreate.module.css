@@ -19,7 +19,9 @@
     align-items: center;
 }
 
-
+.containerRight{
+    margin-left: 3rem;
+}
 .temperamentList{
     display: flex;
     flex-direction: row;
@@ -30,7 +32,7 @@
    
 }
 .temperamentItem{
-    width: 20%;
+    width: 15%;
 }
 
 
@@ -49,8 +51,32 @@
 
 .inputReq{
     border: 1px solid red;
+    border-radius: 4px;
 }
 .spanReq{
     color: red;
     font-size: small;
+}
+
+input {
+    border-radius: 4px;
+}
+
+input.numberReq {
+    width: 2rem;
+    /* color: red; */
+    /* border-color: red; */
+    border: 1px solid red;
+    text-align: right;
+}
+
+input.number {
+    width: 2rem;
+    /* color: green; */
+    border: 1px solid green;
+    text-align: right;
+}
+
+.formItem{
+    margin: 0.5rem;
 }

@@ -9,6 +9,8 @@ import { GET_DOG__BYID,
         GET_TEMPERAMENTS,
         GET_DOG__BYTEMPERAMENT,
         CLEAR_FILTERS,
+        CHANGE_SOURCE,
+        ADD_DOG_NAME,
         // ADD_DOG,
         // ORDER_CHANGED
 } from "../types/types";
@@ -21,6 +23,12 @@ export const isLoading = () => {
 export const clearFilters = () => {
     return {
         type: CLEAR_FILTERS
+    }
+}
+export const changeSource = (source) => {
+    return {
+        type: CHANGE_SOURCE,
+        payload: source
     }
 }
 export const changePage = (page) => {
@@ -79,13 +87,9 @@ export const getDogByName = (name, source) => {
 
 export const getDogs = (source) =>{
     return async (dispatch) => {
-        console.log('o acá?',source)
+
         try {
             const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}dogs?source=${source}`);
-            // const imgPng = [];
-            // response.data.forEach(d => {
-            //     if(d.image?.url?.split('.')[3] !== 'jpg' && Number(d.id)) imgPng.push(d.id)
-            // })
             dispatch({ type: GET_DOGS, payload: {
                 dogs:response.data,
                 source: source
@@ -99,7 +103,7 @@ export const getDogs = (source) =>{
 export const getDBTemperaments = () => {
     return async (dispatch) => {
         try {
-            // console.log(`${process.env.REACT_APP_SERVER_URL}temperament`)
+
             const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}temperament/db`);
             dispatch({
                 type: GET_TEMPERAMENTS,
@@ -113,7 +117,7 @@ export const getDBTemperaments = () => {
 export const getTemperaments = () => {
     return async (dispatch) => {
         try {
-            console.log(`${process.env.REACT_APP_SERVER_URL}temperament`)
+
             const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}temperament`);
             dispatch({
                 type: GET_TEMPERAMENTS,
@@ -131,9 +135,7 @@ export const getDogByTemperament = (searchTemperaments, source) => {
         try {
             const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}dogs?source=${source}`);
             const dogs = response.data;
-            console.log(searchTemperaments)
             const searchedDogs = [];
-
             
             for(let i =0; i<dogs.length; i++){
                 for(let j=0; j<searchTemperaments.length; j++){
@@ -154,22 +156,11 @@ export const getDogByTemperament = (searchTemperaments, source) => {
             console.log(error)
         }
     }
-    
-
 }
 
-
-// export const addDog = (dogToAdd) => {
-//     return async (dispatch) => {
-//         try {
-//             const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}dogs`, dogToAdd)
-//             dispatch({
-//                 type: ADD_DOG,
-//                 payload: response.data
-//             })
-            
-//         } catch (error) {
-//             console.log(first)
-//         }
-//     }
-// }
+export const addNewDogName = (dogName) => {
+    return {
+        type: ADD_DOG_NAME,
+        payload: dogName
+    }
+}

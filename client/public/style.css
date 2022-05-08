@@ -1,13 +1,15 @@
 button.search {
     margin: 0.5rem;
     padding: 0.3rem;
-    border-radius: 2px;
+    border-radius: 10px;
     border: 1px solid white;
     transition: all 0.2s ease-in-out;
     cursor: pointer;
     color: white;
     /* text-shadow: 2px 2px rgb(102, 115, 113); */
     background-color: rgb(61, 58, 58);
+    height: 2rem;
+    font-family: "Comic Sans MS", cursive, sans-serif;
 }
 
 .item{

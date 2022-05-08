@@ -42,6 +42,7 @@ export const DogSearchByTemperament = () => {
         else dispatch(getDogByTemperament(addTemp, source))
 
         document.f1.temperament.value='';
+        
     }
   return (
     

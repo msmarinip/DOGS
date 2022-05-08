@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
-import { getDBTemperaments } from '../../redux/actions/actions';
+import { addNewDogName, getDBTemperaments } from '../../redux/actions/actions';
 import { inputText } from '../../helpers/inputText'
 import { validateForm } from '../../helpers/validateForm'
 import { selectTemperament } from '../../helpers/selectTemperament'; 
@@ -20,7 +20,8 @@ export const DogCreate = () => {
     addTemp:'',
     final: ''
   })
-  const [values, setValues] = React.useState({
+
+  const initValues = {
     name: '',
     weightMin: '',
     weightMax: '',
@@ -32,14 +33,15 @@ export const DogCreate = () => {
     addTemp: '',
     newTemps: []
 
-  })
+  }
+  const [values, setValues] = React.useState(initValues)
   
-  const [tempAdded, setTempAdded] = useState({
+  const [dogAdded, setDogAdded] = useState({
     msg:'',
     uuid: ''
   })
   const dispatch = useDispatch();
-  const temperaments = useSelector(state => state.temperaments)
+  const {temperaments, dogsNames} = useSelector(state => state)
     useEffect(() => {
       dispatch(getDBTemperaments())
       return () => {
@@ -86,8 +88,13 @@ export const DogCreate = () => {
       ...errors,
       final: err.final
     })
-    
-      if(!err.final){ 
+      if(dogsNames.includes(values.name.toLowerCase())){
+        setErrors({
+          ...errors,
+          final: 'There is already a bread dog with the name you enter.'
+        })
+      }
+      if(!err.final && !dogsNames.includes(values.name.toLowerCase()) ){ 
         addDog(values)
       }
     
@@ -121,15 +128,14 @@ export const DogCreate = () => {
   }
 
   const addDog = async (dogToAdd) => {
-    // console.log(first)
+
     try {
         const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}dogs`, dogToAdd)
-        // console.log(response.data.dataValues)
-        setTempAdded({msg: 'ok', uuid: response.data.dataValues.uuid})
-        // console.log(tempAdded)
+        setDogAdded({msg: 'ok', uuid: response.data.dataValues.uuid})
+        dispatch(addNewDogName(values.name))
+        setValues(initValues)
     } catch (error) {
-        // console.log(error)
-        setTempAdded({msg: 'err'})
+        setDogAdded({msg: 'err'})
     }
 }
 
@@ -137,13 +143,13 @@ export const DogCreate = () => {
   return (
     <div className={style.container}>
       <div className={style.containerLeft}></div>
-      <div>
-      {tempAdded.msg ==='ok' && <span>The dog has been added, click <NavLink to={`/dogs/detail/${tempAdded.uuid}`}>here</NavLink>  to see it</span>}
-      { tempAdded.msg ==='err' &&  <span>There was an error. Please try again later.</span>}
+      <div className={style.containerRight}>
+      { dogAdded.msg ==='ok'  && <span>The dog has been added, click <NavLink to={`/dogs/detail/${dogAdded.uuid}`}>here</NavLink>  to see it</span>}
+      { dogAdded.msg ==='err' &&  <span>There was an error. Please try again later.</span>}
       
       <form onSubmit={ handleSubmit } name='DogCreate'>
-        <div>
-          <label>Name</label>
+        <div className={style.formItem}>
+          <label>Name:  </label>
           <input type='text' 
             name='name' 
             value={ values?.name } 
@@ -151,13 +157,13 @@ export const DogCreate = () => {
             onChange={ handleInputChange } 
             className={errors?.name ? style.inputReq : ''}
             />
-          {errors?.name && <span className={style.spanReq}>{errors.name}</span> }
+          {errors?.name && <span className={style.spanReq}>  {errors.name}</span> }
         </div>
-        <>{inputText('Weight','weight',errors, handleInputChange, style)}</>
-        <>{inputText('Height','height',errors, handleInputChange, style)}</>
-        <>{inputText('Life expectancy','life_span',errors, handleInputChange, style)}</>
+        <>{inputText('Weight','weight',errors, handleInputChange, style, values)}</>
+        <>{inputText('Height','height',errors, handleInputChange, style, values)}</>
+        <>{inputText('Life expectancy','life_span',errors, handleInputChange, style, values)}</>
 
-        
+        <div className={style.formItem}>
         <label>New temperament: </label>
         <input type='text' name='addTemp' value={ values?.addTemp } placeholder='Temperament' onChange={ handleInputChange }/>
         <button 
@@ -165,8 +171,8 @@ export const DogCreate = () => {
           name='addNewTemperament' 
           onClick={() => handleAddNewTemperament() } 
           className={errors?.addTemp ? style.btnDisabled : style.btn }
-          >add</button>
-        {errors?.addTemp && <span>{errors.addTemp}</span> }
+          >  add</button>
+          {errors?.addTemp && <span> {errors.addTemp}</span> }
             <span>{
                     values?.newTemps?.map((temp,i) =>
                         <span  key={temp}>
@@ -175,13 +181,14 @@ export const DogCreate = () => {
                         </span>)
                 }
             </span>
-                <br/><br/><br/>
-                Choose the temperaments<br />
+        </div>
+        <div className={style.formItem}>
+        <label>Choose the temperaments</label><br />
         <div className={style.temperamentList}>{selectTemperament(temperaments, handleAdd, style)}</div>    
-                
         
         <div><input type={'submit'} value='Create'/>
-        {errors?.final && <span>{errors.final}</span> }
+        {errors?.final && <span> {errors.final}</span> }
+        </div>
         </div>
       </form>
       </div>

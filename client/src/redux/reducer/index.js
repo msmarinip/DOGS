@@ -1,6 +1,8 @@
 import { 
+    ADD_DOG_NAME,
     CHANGE_ORDER, 
     CHANGE_PAGE, 
+    CHANGE_SOURCE, 
     CLEAR_FILTERS, 
     GET_DOGS, 
     GET_DOG__BYID, 
@@ -18,11 +20,11 @@ const initialState = {
     orderBy: ['name', 'ASC'],
     isLoading: false,
     cantPages: 1,
-    // imgPNG: [],
     searchBy:false,
     searchTempValues:[],
     searchName: '',
-    source: ''
+    source: '',
+    dogsNames:[]
 }
 
 export default function reducer(state = initialState, {type, payload}) {
@@ -44,8 +46,8 @@ switch (type) {
                     ,
             cantPages: Math.ceil(payload.length/8),
             isLoading: false,
-            // imgPNG: payload.pngs
-            source: payload.source
+            source: payload.source,
+            dogsNames: payload.dogs.map(d => d.name.toLowerCase())
 
         }
     case IS_LOADING:
@@ -116,6 +118,20 @@ switch (type) {
             searchTempValues: initialState.searchTempValues,
             searchName:initialState.searchName,
             page:1
+        }
+    case CHANGE_SOURCE: 
+        return {
+            ...state,
+            searchBy: false,
+            searchTempValues: initialState.searchTempValues,
+            searchName:initialState.searchName,
+            page:1,
+            source: payload
+        }
+    case ADD_DOG_NAME: 
+        return {
+            ...state,
+            dogsNames: [...state.dogsNames, payload]
         }
     default:
         return {...state};
