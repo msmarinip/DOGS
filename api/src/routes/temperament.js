@@ -1,16 +1,12 @@
 const  axios  = require("axios");
 const { Router } = require('express');
-
 const { Temperament } = require('../db');
-
 const router = Router();
 const { API_URL, API_KEY } = process.env;
-
-//TODO: realizar el post de temperamentos al ingresar al site, dónde conviene? llamarlo desde el front? o desde el back?
-
+// GET: temperament/
 router.get('/', async(req, res, next) => {
-
     try {
+
         const arrTemperamentosDB = [];
         const dbTemp = await Temperament.findAll({
             attributes: ['temperament']
@@ -18,27 +14,7 @@ router.get('/', async(req, res, next) => {
         dbTemp.forEach(element => {
             arrTemperamentosDB.push(element.temperament);
         })
-        // const arrNewTemperamentos = [];
-        // await axios.get(API_URL)
-        //     .then(res => res.data.forEach(dog => {
-        //         if(dog.temperament){
-        //             dog.temperament.split(",").forEach(temperamento => {
-        //                 if(!arrTemperamentosDB.includes(temperamento.trim()) && !arrNewTemperamentos.includes(temperamento.trim())) {
-        //                     arrNewTemperamentos.push(temperamento.trim());
-        //                 }
-        //             });
-        //         }
-        //     }))
 
-        // const newTemperaments = await arrNewTemperamentos.map((temperament) => {
-            //      return Temperament.findOrCreate({
-                //         where: {temperament: temperament.trim()},
-                //         defaults: {temperament: temperament.trim()}
-                //     })
-                // })
-                
-                // await Promise.all(newTemperaments)
-        //TODO: BULKCREATE
         const arrTemps = [];
         const arrNewTemperamentos = [];
         await axios.get(`${API_URL}?api_key=${API_KEY}`)
@@ -57,7 +33,6 @@ router.get('/', async(req, res, next) => {
             order:[[ 'temperament', 'ASC' ]]
         });
         res.json(temperaments); 
-        // res.send([...arrTemperamentosDB,...arrTemps].sort());
     } catch (error) {
         next(error);
     }   
@@ -79,3 +54,23 @@ router.get('/db', async (req, res, next) => {
 
 
 module.exports = router;
+        // const arrNewTemperamentos = [];
+        // await axios.get(API_URL)
+        //     .then(res => res.data.forEach(dog => {
+        //         if(dog.temperament){
+        //             dog.temperament.split(",").forEach(temperamento => {
+        //                 if(!arrTemperamentosDB.includes(temperamento.trim()) && !arrNewTemperamentos.includes(temperamento.trim())) {
+        //                     arrNewTemperamentos.push(temperamento.trim());
+        //                 }
+        //             });
+        //         }
+        //     }))
+
+        // const newTemperaments = await arrNewTemperamentos.map((temperament) => {
+            //      return Temperament.findOrCreate({
+                //         where: {temperament: temperament.trim()},
+                //         defaults: {temperament: temperament.trim()}
+                //     })
+                // })
+                
+                // await Promise.all(newTemperaments)

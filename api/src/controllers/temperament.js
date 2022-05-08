@@ -31,7 +31,7 @@ const addTemperamentsToDB = () =>{
             }))
         if(arrNewTemperamentos.length >0) await Temperament.bulkCreate(arrNewTemperamentos);
 
-        // res.send([...arrTemperamentosDB,...arrTemps].sort());
+        
     } catch (error) {
         next(error);
     }   

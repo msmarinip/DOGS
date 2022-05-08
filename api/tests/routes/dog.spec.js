@@ -13,7 +13,7 @@ const dog = {
   heightMax: 40
 };
 
-describe('Videogame routes', () => {
+describe('Dog routes', () => {
   before(() => conn.authenticate()
   .catch((err) => {
     console.error('Unable to connect to the database:', err);
@@ -73,6 +73,31 @@ describe('Videogame routes', () => {
         .expect(function(res){
           expect(res.body).to.have.length(173);
         })
+      );
+      it('should get one dog from db', () =>
+        agent.get('/dogs?name=dog&source=db').expect(200)
+        .expect('Content-Type', /json/)
+        .expect(function(res){
+          expect(res.body).to.have.length(1);
+        })
+      );
+      it('should not get the dog from de api', () =>
+        agent.get('/dogs?name=papillon&source=db').expect(200)
+        .expect('Content-Type', /json/)
+        .expect(function(res){
+          expect(res.body).to.have.length(0);
+        })
+      );
+      it('should get the dog from de api', () =>
+        agent.get('/dogs?name=papillon&source=api').expect(200)
+        .expect('Content-Type', /json/)
+        .expect(function(res){
+          expect(res.body).to.have.length(1);
+        })
+      );
+      it('should get an error.', () =>
+        agent.get('/do?name=papillon&source=api').expect(404)
+
       );
   });
 });

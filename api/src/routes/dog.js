@@ -97,7 +97,7 @@ router.post('/', async (req, res, next) => {
         const objTemp = newTemps.map(t => {
             return {temperament:t.trim()}
         })
-        const newTemperaments = await Temperament.bulkCreate(objTemp);
+        const newTemperaments = await Temperament.bulkCreate(objTemp, { transaction: t });
         //Creo el perro
         
         const newDog = await Dog.create({

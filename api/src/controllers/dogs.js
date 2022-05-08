@@ -2,9 +2,7 @@ const axios = require('axios');
 const {Dog, Temperament, Op } = require('../db');
 const { dogObject, listDogTemperament, getMin, nameToStandar } = require('../helpers/helpers');
 const {
-        API_URL_IMG,
         API_URL,
-        API_URL_BY_NAME,
         API_KEY
      } = process.env;
 
@@ -32,13 +30,12 @@ const getAPIDogs = async () => {
         }
         arrAPIDogs.push(obj);
     });
-    // return response.data;
+
     return arrAPIDogs;
 }
 
 const getDBDogs = async () => {
     const dogs = await Dog.findAll({
-      //  attributes: ['uuid', 'name', 'weight', 'height', 'life_span'],
         include: [{
             model: Temperament,
             as: 'temperaments',
@@ -48,7 +45,6 @@ const getDBDogs = async () => {
 
     const arrDBDogs = [];
     dogs.forEach(d => {
-        // console.log(d)
         const obj = {
             idName: 'uuid',
             id: d.uuid,
@@ -92,24 +88,14 @@ const getDBDogByName = async (name) => {
 const getAPIDogByName = async (name) => {
     
     const response = await axios.get(`${API_URL}?api_key=${API_KEY}`)
-    // const apiData = response.data;
     arrDogs = [];
     if(response.data.length > 0){
-        // console.log(apiData)
         const filteredData = response.data.filter(d => d.name.toLowerCase().includes(name.toLowerCase()))
-        // console.log(filteredData)
         filteredData.forEach(d => arrDogs.push(dogObject(d,'apiName')))
     
     }
     return arrDogs;
-    // const response = await axios.get(`${API_URL_BY_NAME}?api_key=${API_KEY}&q=${name}`)
-    
-    // arrDogs = [];
-    // if(response.data.length > 0){
-    //     response.data.forEach(d => arrDogs.push(dogObject(d,'apiName')))
-    
-    // }
-    // return arrDogs;
+
 }
 
 const getDBDogById = async (id) => {

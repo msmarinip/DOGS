@@ -1,9 +1,4 @@
 
-const {
-    API_URL_IMG
- } = process.env;
-
-
 const dogObject = (objDog,source) => {
     
     return {
@@ -14,7 +9,6 @@ const dogObject = (objDog,source) => {
         height: (source === 'db') ? objDog.height : objDog.height.metric,
         life_span: objDog.life_span,
         image: (source === 'db') ?  '' : objDog.image.url,
-        // image: (source === 'db') ?  '' : `${API_URL_IMG}${objDog.reference_image_id}.jpg`,
         temperament: (source === 'db') ? listDogTemperament(objDog.temperaments) : objDog.temperament,
         weightMin: (source === 'db') ? objDog.weightMin : getMin(objDog.weight.metric),
         heightMin: (source === 'db') ? objDog.heightMin : getMin(objDog.height.metric),
