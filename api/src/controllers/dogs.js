@@ -1,6 +1,6 @@
 const axios = require('axios');
 const {Dog, Temperament, Op } = require('../db');
-const { dogObject, listDogTemperament, getMin, nameToStandar } = require('../helpers/helpers');
+const { dogObject } = require('../helpers/helpers');
 const {
         API_URL,
         API_KEY
@@ -13,22 +13,6 @@ const getAPIDogs = async () => {
     const arrAPIDogs = [];
     
     response.data.forEach(d => {
-        // const obj = {
-        //     idName: 'id',
-        //     id: d.id,
-        //     name: d.name,
-        //     weight: d.weight.metric,
-        //     weightMin: getMin(d.weight.metric),
-        //     height: d.height.metric,
-        //     heightMin: getMin(d.height.metric),
-        //     life_span: d.life_span,
-        //     life_spanMin: parseInt(d.life_span),
-        //     temperament: d.temperament,
-        //     reference_image_id: d.reference_image_id,
-        //     image: d.image
-
-        // }
-        // dog.forEach(d => arrDogs.push(dogObject(d,'db')))
         arrAPIDogs.push(dogObject(d,'api'));
     });
 
@@ -46,23 +30,7 @@ const getDBDogs = async () => {
 
     const arrDBDogs = [];
     dogs.forEach(d => {
-        // const obj = {
-        //     idName: 'uuid',
-        //     id: d.uuid,
-        //     name: nameToStandar(d.name),
-        //     weight: d.weight,
-        //     weightMin: d.weightMin,
-        //     weightMax: d.weightMax,
-        //     height: d.height,
-        //     heightMin: d.heightMin,
-        //     heightMax: d.heightMax,
-        //     life_span: d.life_span,
-        //     life_spanMin: d.life_spanMin,
-        //     // life_spanMax: d.life_spanMax,
-        //     temperament: listDogTemperament(d.temperaments)
 
-        // }
-        // dog.forEach(d => arrDogs.push(dogObject(d,'db')))
         arrDBDogs.push(dogObject(d,'db'));
     });
 
@@ -112,7 +80,7 @@ const getDBDogById = async (id) => {
     return dogObject(dog, 'db');
 }
 const getApiDogById = async (id) => {
-    // console.log('id=', id)
+    
     const dogs = await getAPIDogs();
     const dog = dogs.find(d => d.id === parseInt(id))
     return dog;

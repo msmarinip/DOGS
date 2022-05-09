@@ -54,6 +54,17 @@ router.get('/db', async (req, res, next) => {
 
 
 module.exports = router;
+
+
+
+
+
+
+
+
+
+
+
         // const arrNewTemperamentos = [];
         // await axios.get(API_URL)
         //     .then(res => res.data.forEach(dog => {

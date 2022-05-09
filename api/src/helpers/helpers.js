@@ -14,8 +14,7 @@ const dogObject = (objDog,source) => {
         heightMin: (source === 'db') ? objDog.heightMin : getMin(objDog.height.metric),
         life_spanMin: (source === 'db') ? objDog.life_spanMin : parseInt(objDog.life_span),
         weightMax: (source === 'db') ? objDog.weightMax : getMax(objDog.weight.metric),
-        heightMax: (source === 'db') ? objDog.heightMax : getMax(objDog.height.metric),
-        // life_spanMax: (source === 'db') ? objDog.life_spanMax : getMax(objDog.life_span),
+        heightMax: (source === 'db') ? objDog.heightMax : getMax(objDog.height.metric)
     }
 }
 
@@ -51,8 +50,6 @@ const nameToStandar = (name) => {
     const words = name.trim().split(' ');
     const standar = words.map(w =>{
        return w.split('').map((l,i) => i=== 0 ? l.toUpperCase() : l.toLowerCase()).join('')
-       
-        // console.log(w)
     } )
     return standar.join(' ');
   }

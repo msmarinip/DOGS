@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const {Dog, Temperament, conn } = require('../db');
-// const axios = require('axios');
+
 const { 
     getAPIDogs, 
     getDBDogs, 
@@ -8,8 +8,8 @@ const {
     getAPIDogByName, 
     getDBDogById, 
     getApiDogById } = require('../controllers/dogs');
-const temperament = require('../models/Temperament');
-const { nameToStandar } = require('../helpers/helpers');
+// const temperament = require('../models/Temperament');
+// const { nameToStandar } = require('../helpers/helpers');
 const router = Router();
 
 
@@ -76,7 +76,7 @@ router.get('/db', async (req, res, next) => {
                     attributes: ['temperament']
                 }]
             });
-         //   res.json([...dogs, ...apiDogs]);
+
             res.json([...dogs]);
         }
     } 
