@@ -7,8 +7,6 @@ select {
     transition: all 0.2s ease-in-out;
     cursor: pointer;
     color: black;
-    /* text-shadow: 2px 2px rgb(102, 115, 113); */
-    /* background-color: lightgreen */
 }
 
 span.click {

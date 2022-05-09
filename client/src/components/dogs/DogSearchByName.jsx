@@ -12,7 +12,7 @@ export const DogSearchByName = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // console.log(search);
+ 
         dispatch(getDogByName(search, source));
         setSearch('')
     }

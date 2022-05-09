@@ -10,9 +10,7 @@ import { GET_DOG__BYID,
         GET_DOG__BYTEMPERAMENT,
         CLEAR_FILTERS,
         CHANGE_SOURCE,
-        ADD_DOG_NAME,
-        // ADD_DOG,
-        // ORDER_CHANGED
+        ADD_DOG_NAME
 } from "../types/types";
 
 export const isLoading = () => {

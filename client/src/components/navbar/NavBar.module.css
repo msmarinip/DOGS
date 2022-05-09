@@ -2,18 +2,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* background-color: #ba8a1b;; */
-  /* padding: 1rem; */
-  /* position: sticky;
-  top: 0; */
-  /* background-color: rgb(177, 160, 66) */
-background-color: #728239;
+  background-color: #728239;
 
   /* #728239
   #BBC46B
   #88872B */
 
-  /* background-color: rgb(55, 104, 93) */
+  
 }
 .navMenu {
   display: flex;
@@ -25,22 +20,19 @@ background-color: #728239;
   
 }
 .navTitle {
-  /* font-size: 1.5rem;
-  font-weight: bold;
-  color: rgb(174, 226, 190);*/
   margin-left: 1rem;
   margin-right: 1rem;
   width: 22%; 
-  /* font-family: "Comic Sans MS", cursive, sans-serif; */
-font-size: 32px;
-letter-spacing: 0.6px;
-word-spacing: -0.2px;
-color: #464C59;
-font-weight: normal;
-/* text-decoration: underline solid rgb(68, 68, 68); */
-font-style: italic;
-font-variant: small-caps;
-text-transform: none;
+
+  font-size: 32px;
+  letter-spacing: 0.6px;
+  word-spacing: -0.2px;
+  color: #464C59;
+  font-weight: normal;
+
+  font-style: italic;
+  font-variant: small-caps;
+  text-transform: none;
 }
 .unselected {
   
@@ -65,7 +57,7 @@ text-transform: none;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
   text-decoration: none;
-  /* text-shadow: 2px 2px rgb(39, 46, 45); */
+ 
 }
 .img{
   padding-right: 1rem;

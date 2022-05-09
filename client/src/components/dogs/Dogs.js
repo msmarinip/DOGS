@@ -13,7 +13,6 @@ export const Dogs = () => {
 
   
   const [cantPages, setCantPages] = useState(1)
-  // const [source, setSource] = useState('')  
   
   useEffect(() => {
     if(!searchBy){ dispatch(isLoading())}
@@ -24,35 +23,33 @@ export const Dogs = () => {
      if(!searchBy) {dispatch(getDogs(source))}
   }, [dispatch, searchBy, source])
   
-useEffect(() => {
-  setCantPages(Math.ceil(dogs.length/8))
-}, [dogs.length])
+  useEffect(() => {
+    setCantPages(Math.ceil(dogs.length/8))
+  }, [dogs.length])
 
-const handleNext = () => {
-  
-  page<cantPages && dispatch(changePage(page+1))
-  //TODO: Deshabilitar con CSS NEXT cuando se llegó a la pag final
-  
-}
-const handlePrevious = () => {
-  page>1 &&  dispatch(changePage(page-1))
-  //TODO: Deshabilitar con CSS PREVIOUS cuando se llegó a la pag final
-  
-}
+  const handleNext = () => {
+    
+    page<cantPages && dispatch(changePage(page+1))
+    
+  }
+  const handlePrevious = () => {
+    page>1 &&  dispatch(changePage(page-1))
+    
+    
+  }
 
-const handleOrder = (by, direction) => {
+  const handleOrder = (by, direction) => {
 
-  dispatch(changeOrder(by, direction))
-}
-const handleClear = () => {
-  dispatch(clearFilters())
-}
+    dispatch(changeOrder(by, direction))
+  }
+  const handleClear = () => {
+    dispatch(clearFilters())
+  }
 
-const handleSource = ({target}) => {
-  // console.log(target.value)
-  // setSource(target.value)
-  dispatch(changeSource(target.value))
-}
+  const handleSource = ({target}) => {
+    
+    dispatch(changeSource(target.value))
+  }
 
 
   return (
@@ -84,7 +81,7 @@ const handleSource = ({target}) => {
                         
             </div>
             
-            <div><span>Page { page } of { cantPages }</span> <br/><span  className={style.arrow} onClick={ handlePrevious } >◁ </span><span  className={style.arrow} onClick={ handleNext }> ▷</span></div>
+            {cantPages>0 && <div><span>Page { page } of { cantPages }</span> <br/><span  className={style.arrow} onClick={ handlePrevious } >◁ </span><span  className={style.arrow} onClick={ handleNext }> ▷</span></div>}
           </div>
         </div>
         

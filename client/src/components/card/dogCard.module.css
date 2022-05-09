@@ -5,8 +5,6 @@
     margin: 1rem 1rem 1rem 1rem;
     border: 1px solid black;
     border-radius: 10px;
-    /* justify-content: first baseline; */
-    /* background-color: rgb(61, 58, 58); */
     font-family: "Comic Sans MS", cursive, sans-serif;
 }
 
@@ -31,7 +29,6 @@
     flex-direction: column;
     justify-content: space-evenly;
     margin: 0.5rem;
-    /* background-color: white; */
     
  
 }

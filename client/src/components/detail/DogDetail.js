@@ -1,7 +1,7 @@
 
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { NavLink, useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { getDogByID, isLoading, removeSelectedDog } from '../../redux/actions/actions'
 import mainImg from '../../assets/Perrito1.png'
 import style from './dogDetail.module.css'
@@ -10,11 +10,8 @@ export const DogDetail = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   
-  
-  // const { name, weight, height, life_span, temperament, image, isLoading: isLoadingState } = useSelector(state => state)
   const { name, weight, height, life_span, temperament, image } = useSelector(state => state.selectedDog)
   const { isLoading: isLoadingState } = useSelector(state => state)
-  // let history = useHistory();
   
   useEffect(() => {
     dispatch(isLoading())
@@ -51,7 +48,7 @@ export const DogDetail = () => {
         {life_span && <><span>Life span: { life_span }</span><br /></>}
         {temperament && <><span>Temperament: {temperament}</span><br /></>}
         
-        <NavLink to='/dogs'>Back</NavLink><br />
+        <Link to='/dogs'>Back</Link><br />
       </div>
     </div>
     

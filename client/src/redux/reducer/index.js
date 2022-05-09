@@ -19,7 +19,7 @@ const initialState = {
     page: 1,
     orderBy: ['name', 'ASC'],
     isLoading: false,
-    cantPages: 1,
+    // cantPages: 1,
     searchBy:false,
     searchTempValues:[],
     searchName: '',
@@ -44,7 +44,7 @@ switch (type) {
                     ? payload.dogs.sort((a,b) => (a[state.orderBy[0]] >= b[state.orderBy[0]]) ? -1 : 1)
                     : payload.dogs.sort((a,b) => (a[state.orderBy[0]] >= b[state.orderBy[0]]) ? 1 : -1)
                     ,
-            cantPages: Math.ceil(payload.length/8),
+            // cantPages: Math.ceil(payload.length/8),
             isLoading: false,
             source: payload.source,
             dogsNames: payload.dogs.map(d => d.name.toLowerCase())

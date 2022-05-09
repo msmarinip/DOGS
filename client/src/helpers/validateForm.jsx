@@ -4,7 +4,7 @@ export const validateForm = (values, errors, input) => {
     //
     //    ^\d+$  => SOLO NUMEROS
 
-    // console.log('input=',Object.keys(input))
+
     const keyName = Object.keys(input)[0] 
     switch (keyName) {
       case 'name':
@@ -46,7 +46,7 @@ export const validateForm = (values, errors, input) => {
         return err;
       default:
         
-        // console.log(errors)
+        
         let hasErrors = false;
         for (const key in errors) {
           

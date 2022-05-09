@@ -64,15 +64,12 @@ input {
 
 input.numberReq {
     width: 2rem;
-    /* color: red; */
-    /* border-color: red; */
     border: 1px solid red;
     text-align: right;
 }
 
 input.number {
     width: 2rem;
-    /* color: green; */
     border: 1px solid green;
     text-align: right;
 }
