@@ -43,7 +43,7 @@ export const DogDetail = () => {
       <div className={style.containerData}>
       {(isLoadingState) ? 'Loading...' :
       
-        <img src={ image ? image.url : mainImg} alt={ name } className={style.image}/>
+        <img src={ image ? image : mainImg} alt={ name } className={style.image}/>
       } 
         <h1>{name}</h1>
         <span className='item'>Wight: { weight } kg</span><br />

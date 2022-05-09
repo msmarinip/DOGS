@@ -1,5 +1,5 @@
-export const orderBy = (label, by, style, handleOrder) => {
-   return <><span> { label }:</span> <span className={style.arrow} onClick={() => handleOrder(by, 'DESC')}>⇩</span>
-                           <span className={style.arrow} onClick={() => handleOrder(by, 'ASC')}>⇧&nbsp;&nbsp;&nbsp;</span></>
+export const orderBy = (label, byAsc, byDesc, style, handleOrder) => {
+   return <><span> { label }:</span> <span className={style.arrow} onClick={() => handleOrder(byDesc, 'DESC')}>⇩</span>
+                           <span className={style.arrow} onClick={() => handleOrder(byAsc, 'ASC')}>⇧&nbsp;&nbsp;&nbsp;</span></>
 }
 

@@ -79,8 +79,8 @@ const handleSource = ({target}) => {
           <div className={style.orders}>
             <div
               >Order by: 
-                        {orderBy('Name', 'name', style, handleOrder)}
-                        {orderBy('Weight', 'weightMin', style, handleOrder)}
+                        {orderBy('Name', 'name', 'name', style, handleOrder)}
+                        {orderBy('Weight', 'weightMin','weightMax', style, handleOrder)}
                         
             </div>
             
