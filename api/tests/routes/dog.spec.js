@@ -33,6 +33,7 @@ describe('Dog routes', () => {
       .expect(function(res){
         expect(res.body).to.eql([{
               height: "25 - 30",
+              heightMax: 30,
               heightMin: 25,
               id: 201,
               image: "https://cdn2.thedogapi.com/images/HyJvcl9N7.jpg",
@@ -41,6 +42,7 @@ describe('Dog routes', () => {
               name: "Pug",
               temperament: "Docile, Clever, Charming, Stubborn, Sociable, Playful, Quiet, Attentive",
               weight: "6 - 8",
+              weightMax: 8,
               weightMin: 6
             }])
       })

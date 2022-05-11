@@ -8,8 +8,7 @@ const {
     getAPIDogByName, 
     getDBDogById, 
     getApiDogById } = require('../controllers/dogs');
-// const temperament = require('../models/Temperament');
-// const { nameToStandar } = require('../helpers/helpers');
+
 const router = Router();
 
 
