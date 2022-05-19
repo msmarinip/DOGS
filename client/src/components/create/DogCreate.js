@@ -159,6 +159,7 @@ export const DogCreate = () => {
             />
           {errors?.name && <span className={style.spanReq}>  {errors.name}</span> }
         </div>
+        
         <>{inputText('Weight','weight',errors, handleInputChange, style, values)}</>
         <>{inputText('Height','height',errors, handleInputChange, style, values)}</>
         <>{inputText('Life expectancy','life_span',errors, handleInputChange, style, values)}</>

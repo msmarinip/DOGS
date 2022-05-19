@@ -77,7 +77,8 @@ export const Dogs = () => {
             <div
               >Order by: 
                         {orderBy('Name', 'name', 'name', style, handleOrder)}
-                        {orderBy('Weight', 'weightMin','weightMax', style, handleOrder)}
+                        {orderBy('Weight', 'weightMin','weightMin', style, handleOrder)}
+                        {orderBy('Height', 'heightMin','heightMin', style, handleOrder)}
                         
             </div>
             
@@ -105,6 +106,7 @@ export const Dogs = () => {
                           id =  { d.id }
                           name = { d.name }
                           weight = { d.weight }
+                          height = { d.height }
                           temperament = { d.temperament }
                           image = { d.image?.url ? d.image?.url : d.image }
                        />
